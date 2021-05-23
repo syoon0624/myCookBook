@@ -1,21 +1,11 @@
 <% include ./includes/header.ejs %>
     <div class="container" id="masonry_container">
-        <% products.forEach(function(product){ %>
-        <div class="masonry-grid">
-            <%if(product.thumbnail){%>
-                <img src="/uploads/<%=product.thumbnail%>">
-            <%}%>
-            <p>
-                <%=product.title%><br />
-                by <%=product.username%>(
-                <%=product.getDate.year%>.
-                <%=product.getDate.month%>.
-                <%=product.getDate.day%>
-                )
-            </p>
-        </div>
-        <%});%>
+        <% for (var i in videos) { %>
+            <div id="<%=videos[i].id%>" vid="<%=videos[i].video_id%>">
+            </div>
+        <%};%>
     </div>
+    
 <style type="text/css">
 .masonry-grid img { max-width: 260px; }
 </style>
@@ -29,5 +19,41 @@
         columnWidth : 270
       });
     });
+</script>
+<script>
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    var players = [];
+    var videoIds = [];
+    for (var i = 0;i<10;i++) {
+        players.push(String(i));
+        videoIds.push($('#'+i).attr('vid'));
+    }
+
+    function onYouTubeIframeAPIReady() {
+        for (var i = 0; i < videoIds.length; i++) {
+            player = new YT.Player(players[i], {
+                height: '360',
+                width: '640',
+                videoId: videoIds[i],
+                events: {
+                    // 'onReady': onPlayerReady,
+                    // 'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+    }
+
+    //   function onPlayerReady(event) {
+    //   }
+    //   function onPlayerStateChange(event) {
+    //   }
+    //   function stopVideo() {
+    //   }
 </script>
 <% include ./includes/footer.ejs %>
