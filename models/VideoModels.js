@@ -1,12 +1,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var CommentsSchema = new Schema({
-  content: String,
-  created_at: {
-    type: Date,
-    default: Date.now(),
-  },
-  product_id: Number,
+var VideoSchema = new Schema({
+  name: String,
+  title: String,
+  videoId: String,
+  description: String, //설명
+  url: String,
 });
 
-module.exports = mongoose.model('comments', CommentsSchema);
+module.exports = mongoose.model('videos', VideoSchema);
