@@ -27,9 +27,8 @@ var connect = mongoose.connect('mongodb://127.0.0.1:27017/cookBook', {
 var admin = require('./routes/admin');
 var accounts = require('./routes/accounts');
 var auth = require('./routes/auth');
-var home = require('./routes/home.js');
-var chat = require('./routes/chat');
 var connectMongo = require('connect-mongo');
+var Search = require('./routes/Search');
 var MongoStore = connectMongo(session);
 
 app.set('views', path.join(__dirname, 'views'));
@@ -69,11 +68,10 @@ app.use(function (req, res, next) {
 });
 
 //routes add
-app.use('/', home);
+app.use('/', Search);
 app.use('/admin', admin);
 app.use('/accounts', accounts);
 app.use('/auth', auth);
-app.use('/chat', chat);
 
 var server = app.listen(port, function () {
   console.log('Express listening on port', port);
