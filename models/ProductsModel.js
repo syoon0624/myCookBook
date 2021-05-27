@@ -9,7 +9,7 @@ var ProductsSchema = new Schema({
     required: [true, '제목은 입력해주세요'],
   },
   thumbnail: String, //이미지 파일명
-  price: Number, //가격
+  price: Number, //가격 
   description: String, //설명
   created_at: {
     //작성일
@@ -31,5 +31,5 @@ ProductsSchema.virtual('getDate').get(function () {
 // 1씩 증가하는 primary Key를 만든다
 // model : 생성할 document 이름
 // field : primary key , startAt : 1부터 시작
-
+ 
 module.exports = mongoose.model('products', ProductsSchema);
