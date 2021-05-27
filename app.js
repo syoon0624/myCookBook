@@ -23,8 +23,8 @@ var connect = mongoose.connect('mongodb://127.0.0.1:27017/cookBook', {
   useMongoClient: true,
 });
 
-//admin module get
-var admin = require('./routes/admin');
+//categori module get
+var categori = require('./routes/categori');
 var accounts = require('./routes/accounts');
 var auth = require('./routes/auth');
 var connectMongo = require('connect-mongo');
@@ -69,7 +69,7 @@ app.use(function (req, res, next) {
 
 //routes add
 app.use('/', Search);
-app.use('/admin', admin);
+app.use('/categori', categori);
 app.use('/accounts', accounts);
 app.use('/auth', auth);
 

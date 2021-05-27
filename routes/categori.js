@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var ProductsModel = require('../models/ProductsModel');
-var CommentsModel = require('../models/VideoModels');
+var CategoriModel = require('../models/CategoriModel');
 var csrf = require('csurf');
 var csrfProtection = csrf({ cookie: true });
 var loginRequired = require('../libs/loginRequired');
@@ -29,16 +28,16 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 router.get('/', function (req, res) {
-  res.send('admin main page');
+  res.send('categori main page');
 });
 
 router.get('/products', function (req, res) {
-  ProductsModel.find(function (err, products) {
+  CategoriModel.find(function (err, products) {
     res.render(
       'admin/products',
       { products: products }
       //ProductModel의 products를 받아서
-      //admin/products로 response를 보낸다.
+      //categori/products로 response를 보낸다.
     );
   });
 });
@@ -49,7 +48,7 @@ router.get(
   csrfProtection,
   function (req, res) {
     //edit에서도 같은 form을 사용하므로 빈 변수( product )를 넣어서 에러를 피해준다
-    res.render('admin/form', { product: '', csrfToken: req.csrfToken() });
+    res.render('categori/form', { product: '', csrfToken: req.csrfToken() });
   }
 );
 
@@ -59,7 +58,7 @@ router.post(
   loginRequired,
   csrfProtection,
   function (req, res) {
-    var product = new ProductsModel({
+    var product = new CategoriModel({
       name: req.body.name,
       thumbnail: req.file ? req.file.filename : '',
       price: req.body.price,
@@ -72,7 +71,7 @@ router.post(
       res.send(validationError);
     } else {
       product.save(function (err) {
-        res.redirect('/admin/products');
+        res.redirect('/categori/products');
       });
     }
     //이 위는 수정되지 않았음
@@ -81,10 +80,10 @@ router.post(
 
 router.get('/products/detail/:id', function (req, res) {
   //url 에서 변수 값을 받아올떈 req.params.id 로 받아온다
-  ProductsModel.findOne({ id: req.params.id }, function (err, product) {
+  CategoriModel.findOne({ id: req.params.id }, function (err, product) {
     //제품정보를 받고 그안에서 댓글을 받아온다.
-    CommentsModel.find({ product_id: req.params.id }, function (err, comments) {
-      res.render('admin/productsDetail', {
+    CategoriModel.find({ product_id: req.params.id }, function (err, comments) {
+      res.render('categori/productsDetail', {
         product: product,
         comments: comments,
       });
@@ -98,8 +97,8 @@ router.get(
   csrfProtection,
   function (req, res) {
     //기존에 폼에 value안에 값을 셋팅하기 위해 만든다.
-    ProductsModel.findOne({ id: req.params.id }, function (err, product) {
-      res.render('admin/form', {
+    CategoriModel.findOne({ id: req.params.id }, function (err, product) {
+      res.render('categori/form', {
         product: product,
         csrfToken: req.csrfToken(),
       });
@@ -114,7 +113,7 @@ router.post(
   csrfProtection,
   function (req, res) {
     //그전에 지정되 있는 파일명을 받아온다
-    ProductsModel.findOne({ id: req.params.id }, function (err, product) {
+    CategoriModel.findOne({ id: req.params.id }, function (err, product) {
       //아래의 코드만 추가되면 된다.
       if (req.file && product.thumbnail) {
         //요청중에 파일이 존재 할시 이전이미지 지운다.
@@ -128,11 +127,11 @@ router.post(
         price: req.body.price,
         description: req.body.description,
       };
-      ProductsModel.update(
+      CategoriModel.update(
         { id: req.params.id },
         { $set: query },
         function (err) {
-          res.redirect('/admin/products/detail/' + req.params.id);
+          res.redirect('/categori/products/detail/' + req.params.id);
         }
       );
     });
@@ -140,13 +139,13 @@ router.post(
 );
 
 router.get('/products/delete/:id', function (req, res) {
-  ProductsModel.remove({ id: req.params.id }, function (err) {
-    res.redirect('/admin/products');
+  CategoriModel.remove({ id: req.params.id }, function (err) {
+    res.redirect('/categori/products');
   });
 });
 
 router.post('/products/ajax_comment/insert', function (req, res) {
-  var comment = new CommentsModel({
+  var comment = new CategoriModel({
     content: req.body.content,
     product_id: parseInt(req.body.product_id),
   });
@@ -160,7 +159,7 @@ router.post('/products/ajax_comment/insert', function (req, res) {
 });
 
 router.post('/products/ajax_comment/delete', function (req, res) {
-  CommentsModel.remove({ id: req.body.comment_id }, function (err) {
+  CategoriModel.remove({ id: req.body.comment_id }, function (err) {
     res.json({ message: 'success' });
   });
 });
