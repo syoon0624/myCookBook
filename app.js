@@ -19,12 +19,12 @@ db.on('error', console.error);
 db.once('open', function () {
   console.log('mongo db Connection');
 });
-var connect = mongoose.connect('mongodb://127.0.0.1:27017/cookBook', {
+var connect = mongoose.connect('mongodb://127.0.0.1:27017/test', {
   useMongoClient: true,
 });
 
-//admin module get
-var admin = require('./routes/admin');
+//categori module get
+var categori = require('./routes/categori');
 var accounts = require('./routes/accounts');
 var auth = require('./routes/auth');
 var connectMongo = require('connect-mongo');
@@ -69,18 +69,10 @@ app.use(function (req, res, next) {
 
 //routes add
 app.use('/', Search);
-app.use('/admin', admin);
+app.use('/categori', categori);
 app.use('/accounts', accounts);
 app.use('/auth', auth);
 
 var server = app.listen(port, function () {
   console.log('Express listening on port', port);
 });
-
-var listen = require('socket.io');
-var io = listen(server);
-//socket io passport 접근하기 위한 미들웨어 적용
-io.use(function (socket, next) {
-  sessionMiddleWare(socket.request, socket.request.res, next);
-});
-require('./libs/socketConnection')(io);
