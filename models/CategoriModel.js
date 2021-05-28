@@ -4,7 +4,8 @@ var Schema = mongoose.Schema;
 var CategoriSchema = new Schema({
   title: {
     type: String,
-    required: [true, '카테고리명을 입력해주세요'],
+    default: 'default',
+    required: [true, '카테고리명이 비어있습니다!'],
   },
   videoNum: String,
   description: String, //설명
@@ -16,7 +17,7 @@ var CategoriSchema = new Schema({
 });
 
 CategoriSchema.virtual('getDate').get(function () {
-  var date = new Date(this.created_at); 
+  var date = new Date(this.created_at);
   return {
     year: date.getFullYear(),
     month: date.getMonth() + 1,

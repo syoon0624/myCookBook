@@ -4,13 +4,12 @@ var youtube = new Youtube();
 var express = require('express');
 var router = express.Router();
 
-var word = '백종원 레시피'; // 검색어 지정
+var word = '백종원'; // 검색어 지정
 var limit = 10; // 출력 갯수
 var video = [];
 var test = 'test';
 var count = 0;
 youtube.setKey('AIzaSyAsKr_oWGZIBbL5tLdIl98Lf9Pzqj8jX4o'); // API 키 입력
-
 youtube.addParam('order', 'rating'); // 평점 순으로 정렬
 youtube.addParam('type', 'video'); // 타입 지정
 youtube.addParam('videoLicense', 'creativeCommon'); // 크리에이티브 커먼즈 아이템만 불러옴

@@ -1,0 +1,35 @@
+<% include ../includes/header.ejs %>
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th width="100px" style="text-align: center;">카테고리명</th>
+            <th style="text-align: center;">개설 날짜</th>
+            <th>내용</th>
+            <th>사용자명</th>
+            <th>삭제</th>
+        </tr>
+        <%categories.forEach(function(product){%>
+        <tr>
+            <td>
+                <a href="/categori/products/detail/<%=product.id%>"><%=product.title%></a>
+            </td>
+            <td>
+                <%=product.getDate.year%> -
+                <%=product.getDate.month%> -
+                <%=product.getDate.day%>
+            </td>
+            <td>
+                <%=product.description%> -
+            </td>
+            <td>
+                <%=product.username%> -
+            </td>
+            <td>
+                <a href="/categori/products/delete/<%=product.id%>" class="btn btn-danger" onclick="return confirm('삭제하시겠습니까?')">삭제</a>
+            </td>
+        </tr>
+        <% }); %>
+    </table>
+ 
+    <a href="categori/write" class="btn btn-default">작성하기</a>
+ 
+<% include ../includes/footer.ejs %>

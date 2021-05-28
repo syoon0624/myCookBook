@@ -1,0 +1,15 @@
+<% include ../includes/header.ejs %>
+    <form action="" method="post" >
+        <table class="table table-bordered">
+            <tr>
+                <th>카테고리명</th>
+                <td><input type="text" name="title" class="form-control"  value="<%=categories.title%>"/></td>
+            </tr>
+            <tr>
+                <th>설명</th>
+                <td><input type="text" name="description" class="form-control" value="<%=categories.description%>"/></td>
+            </tr>
+        </table>
+        <input type="submit" name="submit" value="submit" class="btn btn-primary">
+    </form>
+<% include ../includes/footer.ejs %>

@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var CategoriModel = require('../models/CategoriModel');
-var csrf = require('csurf');
-var csrfProtection = csrf({ cookie: true });
+//var csrf = require('csurf');
+//var csrfProtection = csrf({ cookie: true });
 var loginRequired = require('../libs/loginRequired');
 
 var path = require('path');
@@ -34,56 +34,43 @@ router.get('/', function (req, res) {
 router.get('/products', function (req, res) {
   CategoriModel.find(function (err, products) {
     res.render(
-      'admin/products',
-      { products: products }
+      'category/products',
+      { categories: products }
       //ProductModel의 products를 받아서
       //categori/products로 response를 보낸다.
     );
   });
 });
 
-router.get(
-  '/products/write',
-  loginRequired,
-  csrfProtection,
-  function (req, res) {
-    //edit에서도 같은 form을 사용하므로 빈 변수( product )를 넣어서 에러를 피해준다
-    res.render('categori/form', { product: '', csrfToken: req.csrfToken() });
-  }
-);
+router.get('/categories/write', loginRequired, function (req, res) {
+  //edit에서도 같은 form을 사용하므로 빈 변수( product )를 넣어서 에러를 피해준다
+  res.render('category/form', { categories: '' });
+});
 
-router.post(
-  '/products/write',
-  upload.single('thumbnail'),
-  loginRequired,
-  csrfProtection,
-  function (req, res) {
-    var product = new CategoriModel({
-      name: req.body.name,
-      thumbnail: req.file ? req.file.filename : '',
-      price: req.body.price,
-      description: req.body.description,
-      username: req.user.username,
+router.post('/categories/write', loginRequired, function (req, res) {
+  var category = new CategoriModel({
+    title: req.body.title,
+    description: req.body.description,
+    username: req.user.username,
+  });
+  //이 아래는 수정되지 않았음
+  var validationError = category.validateSync();
+  if (validationError) {
+    res.send(validationError);
+  } else {
+    category.save(function (err) {
+      res.redirect('/categori/products');
     });
-    //이 아래는 수정되지 않았음
-    var validationError = product.validateSync();
-    if (validationError) {
-      res.send(validationError);
-    } else {
-      product.save(function (err) {
-        res.redirect('/categori/products');
-      });
-    }
-    //이 위는 수정되지 않았음
   }
-);
+  //이 위는 수정되지 않았음
+});
 
 router.get('/products/detail/:id', function (req, res) {
   //url 에서 변수 값을 받아올떈 req.params.id 로 받아온다
-  CategoriModel.findOne({ id: req.params.id }, function (err, product) {
+  CategoriModel.findOne({ _id: req.params.id }, function (err, product) {
     //제품정보를 받고 그안에서 댓글을 받아온다.
     CategoriModel.find({ product_id: req.params.id }, function (err, comments) {
-      res.render('categori/productsDetail', {
+      res.render('category/productsDetail', {
         product: product,
         comments: comments,
       });
@@ -91,29 +78,23 @@ router.get('/products/detail/:id', function (req, res) {
   });
 });
 
-router.get(
-  '/products/edit/:id',
-  loginRequired,
-  csrfProtection,
-  function (req, res) {
-    //기존에 폼에 value안에 값을 셋팅하기 위해 만든다.
-    CategoriModel.findOne({ id: req.params.id }, function (err, product) {
-      res.render('categori/form', {
-        product: product,
-        csrfToken: req.csrfToken(),
-      });
+router.get('/products/edit/:id', loginRequired, function (req, res) {
+  //기존에 폼에 value안에 값을 셋팅하기 위해 만든다.
+  CategoriModel.findOne({ _id: req.params.id }, function (err, product) {
+    res.render('category/form', {
+      categories: product,
     });
-  }
-);
+  });
+});
 
 router.post(
   '/products/edit/:id',
   loginRequired,
   upload.single('thumbnail'),
-  csrfProtection,
+  //  csrfProtection,
   function (req, res) {
     //그전에 지정되 있는 파일명을 받아온다
-    CategoriModel.findOne({ id: req.params.id }, function (err, product) {
+    CategoriModel.findOne({ _id: req.params.id }, function (err, product) {
       //아래의 코드만 추가되면 된다.
       if (req.file && product.thumbnail) {
         //요청중에 파일이 존재 할시 이전이미지 지운다.
@@ -131,7 +112,7 @@ router.post(
         { id: req.params.id },
         { $set: query },
         function (err) {
-          res.redirect('/categori/products/detail/' + req.params.id);
+          res.redirect('/category/products/detail/' + req.params.id);
         }
       );
     });
@@ -139,7 +120,7 @@ router.post(
 );
 
 router.get('/products/delete/:id', function (req, res) {
-  CategoriModel.remove({ id: req.params.id }, function (err) {
+  CategoriModel.deleteMany({ _id: req.params.id }, function (err) {
     res.redirect('/categori/products');
   });
 });
@@ -159,7 +140,7 @@ router.post('/products/ajax_comment/insert', function (req, res) {
 });
 
 router.post('/products/ajax_comment/delete', function (req, res) {
-  CategoriModel.remove({ id: req.body.comment_id }, function (err) {
+  CategoriModel.remove({ _id: req.body.comment_id }, function (err) {
     res.json({ message: 'success' });
   });
 });
