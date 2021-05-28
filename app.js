@@ -19,7 +19,7 @@ db.on('error', console.error);
 db.once('open', function () {
   console.log('mongo db Connection');
 });
-var connect = mongoose.connect('mongodb://127.0.0.1:27017/cookBook', {
+var connect = mongoose.connect('mongodb://127.0.0.1:27017/test', {
   useMongoClient: true,
 });
 
@@ -76,11 +76,3 @@ app.use('/auth', auth);
 var server = app.listen(port, function () {
   console.log('Express listening on port', port);
 });
-
-var listen = require('socket.io');
-var io = listen(server);
-//socket io passport 접근하기 위한 미들웨어 적용
-io.use(function (socket, next) {
-  sessionMiddleWare(socket.request, socket.request.res, next);
-});
-require('./libs/socketConnection')(io);
