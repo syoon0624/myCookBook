@@ -1,25 +1,25 @@
 <% include ../includes/header.ejs %>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <%=product.title%>
+            　<%=product.title%>
         </div>
         <div style="padding-bottom: 10px">
-            작성일 :
+            <br>　　작성일 :
             <%=product.getDate.year%> -
                 <%=product.getDate.month%> -
                     <%=product.getDate.day%>
         </div>
         <div>
             <% var count=0; %>
-                보유중인 영상
+            　　※ 보유중인 영상<br><br>
                 <% for (var i in items[0]) { %>
                     <div>
-                        <%=items[0][i]%>
+                        　　<%=items[0][i]%>
                     </div>
                     <%count++;};%>
         </div>
         <div>
-            설명 : <%=product.description%>
+            <br>　　설명 : <%=product.description%><br><br>
         </div>
         <form method="get" action="">
             <div class="input-group">
@@ -48,24 +48,8 @@
                 <button class="btn btn-primary" style="margin-top: 10px; margin-left: 15px;" >영상담기</button>
         </form>
         <div class="panel-body">
-            <!-- 댓글영역  -->
-            <div>
-                댓글작성하기
-                <form id="commentForm" action="" method="post">
-                    <input type="hidden" name="product_id" value="<%=product.id%>" />
-                    <textarea class="form-control" name="content"></textarea>
-                    <button class="btn btn-primary" style="margin-top: 10px" type="submit">댓글작성</button>
-                </form>
-            </div>
-            <!-- 댓글영역  -->
+            <div>   
             <hr />
-            <div id="comment_area">
-                <% comments.forEach(function(comment){ %>
-                    <div>
-                        <%=comment.content%>
-                        ( <a class='comment_delete' comment_id='<%=comment._id%>'>삭제</a> )
-                    </div>
-                <% }); %>
             </div>
         </div>
     </div>
