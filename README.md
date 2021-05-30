@@ -1,15 +1,14 @@
-
-###### MyCookBook
+# MyCookBook
 
 # 나만의 요리 레시피 모음 만들기
 
 ### 경희대학교 컴퓨터공학과 
-###2017103997 송근영, 2016104146 이승윤
+#### 2017103997 송근영, 2016104146 이승윤
 
-[MyCookbook 주소](http://khuhub.khu.ac.kr/2016104146/OpenSource-MyCookBook/)
+[MyCookbook 주소](http://khuhub.khu.ac.kr/2016104146/OpenSource-MyCookBook/)<br>
 위 주소는 배포시 업데이트할 예정 
 
-# 설명
+## 설명
 이 프로젝트는 youtube api를 사용하여 요리를 목적으로 하는 유튜브의 정보 및 동영상을 나만의 리스트로 볼 수 있도록 하기위해 제작되었습니다.
 
 ## 사용 기술 스택
@@ -50,5 +49,5 @@
 [AWS](https://aws.amazon.com/ko/sdk-for-node-js/)
 
 ## Information
-송근영 : rmsdud1626@naver.com
+송근영 : rmsdud1626@naver.com<br>
 이승윤 : syoon624@naver.com
