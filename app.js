@@ -28,7 +28,7 @@ var categori = require('./routes/categori');
 var accounts = require('./routes/accounts');
 var auth = require('./routes/auth');
 var connectMongo = require('connect-mongo');
-var Search = require('./routes/Search');
+var Video = require('./routes/Videos');
 var MongoStore = connectMongo(session);
 
 app.set('views', path.join(__dirname, 'views'));
@@ -68,7 +68,7 @@ app.use(function (req, res, next) {
 });
 
 //routes add
-app.use('/', Search);
+app.use('/', Video);
 app.use('/categori', categori);
 app.use('/accounts', accounts);
 app.use('/auth', auth);
