@@ -3,6 +3,24 @@
         <div class="panel-heading">
             <%=product.title%>
         </div>
+        <div style="padding-bottom: 10px">
+            작성일 :
+            <%=product.getDate.year%> -
+                <%=product.getDate.month%> -
+                    <%=product.getDate.day%>
+        </div>
+        <div>
+            <% var count=0; %>
+                보유중인 영상
+                <% for (var i in items[0]) { %>
+                    <div>
+                        <%=items[0][i]%>
+                    </div>
+                    <%count++;};%>
+        </div>
+        <div>
+            설명 : <%=product.description%>
+        </div>
         <form method="get" action="">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="검색 키워드를 입력하세요!" name="keyword" autocomplete='off'>
@@ -30,18 +48,6 @@
                 <button class="btn btn-primary" style="margin-top: 10px; margin-left: 15px;" >영상담기</button>
         </form>
         <div class="panel-body">
-            <div style="padding-bottom: 10px">
-                작성일 : 
-                <%=product.getDate.year%> - 
-                <%=product.getDate.month%> - 
-                <%=product.getDate.day%>
-            </div>
-            <% if(product.thumbnail){%>
-                <p>
-                    <img src="/uploads/<%=product.thumbnail%>" style="max-width: 100%"/>
-                </p>
-            <% } %>
-            <%=product.description%>
             <!-- 댓글영역  -->
             <div>
                 댓글작성하기

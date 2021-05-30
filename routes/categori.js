@@ -54,53 +54,73 @@ router.get('/products/detail/:id', function (req, res) {
     var video = [];
     //제품정보를 받고 그안에서 댓글을 받아온다.
     CategoriModel.find({ product_id: req.params.id }, function (err, comments) {
-      if (word != null) {
-        var count = 0;
-        youtube.addParam('order', 'rating'); // 평점 순으로 정렬
-        youtube.addParam('type', 'video'); // 타입 지정
-        youtube.addParam('videoLicense', 'creativeCommon'); // 크리에이티브 커먼즈 아이템만 불러옴
-        youtube.search(word, limit, function (err, result) {
-          // 검색 실행
-          console.log(word);
-          if (err) {
-            console.log(err);
-          } // 에러일 경우 에러공지하고 빠져나감
-          //console.log(JSON.stringify(result, null, 2)); // 받아온 전체 리스트 출력
-          var items = result['items']; // 결과 중 items 항목만 가져옴
-          for (var i in items) {
-            var it = items[i];
-            for (var j in it) {
-              if (it[j]['title'] != null) {
-                var title = it[j]['title'];
-              }
-              if (it[j]['videoId'] != null) {
-                var video_id = it[j]['videoId'];
-              }
-              var urls = 'https://www.youtube.com/watch?v=' + video_id;
-            }
-            var item = {
-              id: count,
-              title: title,
-              video_id: video_id,
-              urls: urls,
-              categori: product.title,
-            };
-            count++;
-            video.push(item);
+      VideoModel.find(function (err, myVideo) {
+        var mitem = []; // 카테고리별 비디오 목록을 담아두는 배열
+        var videos = []; // 비디오 목록을 담는 임시 배열
+        for (var j in myVideo) {
+          if (product.title == myVideo[j].categori) {
+            videos.push(myVideo[j].title);
           }
+        }
+        if (videos.length != 0) {
+          // 빈 배열 체크
+          //console.log(videos);
+          var items = videos;
+          mitem.push(items);
+        }
+        //console.log(item[2].category.title);
+        //console.log(item[2].videos);
+        if (word != null) {
+          var count = 0;
+          youtube.addParam('order', 'rating'); // 평점 순으로 정렬
+          youtube.addParam('type', 'video'); // 타입 지정
+          youtube.addParam('videoLicense', 'creativeCommon'); // 크리에이티브 커먼즈 아이템만 불러옴
+          youtube.search(word, limit, function (err, result) {
+            // 검색 실행
+            //console.log(word);
+            if (err) {
+              console.log(err);
+            } // 에러일 경우 에러공지하고 빠져나감
+            //console.log(JSON.stringify(result, null, 2)); // 받아온 전체 리스트 출력
+            var items = result['items']; // 결과 중 items 항목만 가져옴
+            for (var i in items) {
+              var it = items[i];
+              for (var j in it) {
+                if (it[j]['title'] != null) {
+                  var title = it[j]['title'];
+                }
+                if (it[j]['videoId'] != null) {
+                  var video_id = it[j]['videoId'];
+                }
+                var urls = 'https://www.youtube.com/watch?v=' + video_id;
+              }
+              var item = {
+                id: count,
+                title: title,
+                video_id: video_id,
+                urls: urls,
+                categori: product.title,
+              };
+              count++;
+              video.push(item);
+            }
+            res.render('category/productsDetail', {
+              product: product,
+              comments: comments,
+              videos: video,
+              items: mitem,
+            });
+          });
+        } else {
+          //console.log(item[0]);
           res.render('category/productsDetail', {
             product: product,
             comments: comments,
             videos: video,
+            items: mitem,
           });
-        });
-      } else {
-        res.render('category/productsDetail', {
-          product: product,
-          comments: comments,
-          videos: video,
-        });
-      }
+        }
+      });
     });
   });
 });
