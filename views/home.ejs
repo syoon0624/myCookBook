@@ -1,14 +1,16 @@
 <% include ./includes/header.ejs %>
-    <div id="masonry_container">
+    <div style="background-color:lavenderblush">
         <% var count = 0; %>
+        <center>
         <% for (var i in video) { %>
-            <div>
+            <div style ="color:gray; font-weight:bold; font-size:2.0em;">
                 <%=video[i].category.title%>
             </div>
             <% for (var j in video[i].videos) { %>
-            <div id="<%=count%>" vid="<%=video[i].videos[j].video_id%>">
-            </div>
+                <div id="<%=count%>" vid="<%=video[i].videos[j].video_id%>">
+                </div>
             <%count++;};};%>
+        </center>
     </div>
 
     <style type="text/css">
@@ -48,19 +50,8 @@
                     height: '360',
                     width: '640',
                     videoId: videoIds[i],
-                    events: {
-                        // 'onReady': onPlayerReady,
-                        // 'onStateChange': onPlayerStateChange
-                    }
                 });
             }
         }
-
-    //   function onPlayerReady(event) {
-    //   }
-    //   function onPlayerStateChange(event) {
-    //   }
-    //   function stopVideo() {
-    //   }
     </script>
     <% include ./includes/footer.ejs %>
