@@ -3,6 +3,32 @@
         <div class="panel-heading">
             <%=product.title%>
         </div>
+        <form method="get" action="">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="검색 키워드를 입력하세요!" name="keyword" autocomplete='off'>
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="submit">찾기</button>
+                </span>
+            </div>
+        </form>
+        <form method="post" action="">
+            <% for (var i in videos) { %>
+                <div style="float:left;
+                             padding: 15px;
+                            ">
+                    <input type="checkbox" name="videoNum" style="
+                        position: absolute;
+                        margin-top: 5px;
+                        margin-left: 5px;
+                        z-index: 4;
+                        zoom:3.0;
+                        " value="<%=videos[i].id + '///' + videos[i].title +'///'+ videos[i].categori +'///'+ videos[i].video_id +'///'+ videos[i].urls%>"/>
+                    <div id="<%=videos[i].id%>" vid="<%=videos[i].video_id%>">
+                    </div>
+                </div>
+                <%};%>
+                <button class="btn btn-primary" style="margin-top: 10px; margin-left: 15px;" >영상담기</button>
+        </form>
         <div class="panel-body">
             <div style="padding-bottom: 10px">
                 작성일 : 
@@ -20,9 +46,9 @@
             <div>
                 댓글작성하기
                 <form id="commentForm" action="" method="post">
-                    <input type="hidden" name="product_id" value="<%=product._id%>" />
+                    <input type="hidden" name="product_id" value="<%=product.id%>" />
                     <textarea class="form-control" name="content"></textarea>
-                    <button class="btn btn-primary" style="margin-top: 10px">댓글작성</button>
+                    <button class="btn btn-primary" style="margin-top: 10px" type="submit">댓글작성</button>
                 </form>
             </div>
             <!-- 댓글영역  -->
@@ -90,4 +116,45 @@ $(document).on('click' , '.comment_delete' , function(){
         });
     }
 });
+</script>
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.1/imagesloaded.pkgd.min.js"></script>
+<script type="text/javascript">
+    var $masonry_container = $('#masonry_container');
+    $masonry_container.imagesLoaded(function () {
+        $masonry_container.masonry({
+            itemSelector: '.masonry-grid',
+            columnWidth: 270
+        });
+    });
+</script>
+<script>
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    var players = [];
+    var videoIds = [];
+    for (var i = 0; i < 10; i++) {
+        players.push(String(i));
+        videoIds.push($('#' + i).attr('vid'));
+    }
+
+    function onYouTubeIframeAPIReady() {
+        for (var i = 0; i < videoIds.length; i++) {
+            player = new YT.Player(players[i], {
+                height: '300',
+                width: '500',
+                videoId: videoIds[i],
+                events: {
+                    // 'onReady': onPlayerReady,
+                    // 'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+    }
 </script>
