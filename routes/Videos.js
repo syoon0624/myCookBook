@@ -16,7 +16,7 @@ router.get('/', function (req, res) {
         }
         if (videos.length != 0) {
           // 빈 배열 체크
-          console.log(videos);
+          //console.log(videos);
           var items = {
             category: category[i],
             videos: videos,

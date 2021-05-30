@@ -1,54 +1,60 @@
 <% include ./includes/header.ejs %>
     <div id="masonry_container">
-        한식
-        <% for (var i in videos) { %>
-            <div id="<%=videos[i].id%>" vid="<%=videos[i].video_id%>">
+        <% var count = 0; %>
+        <% for (var i in video) { %>
+            <div>
+                <%=video[i].category.title%>
             </div>
-        <%};%>
+            <% for (var j in video[i].videos) { %>
+            <div id="<%=count%>" vid="<%=video[i].videos[j].video_id%>">
+            </div>
+            <%count++;};};%>
     </div>
-    
-<style type="text/css">
-.masonry-grid img { max-width: 260px; }
-</style>
-<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.1/imagesloaded.pkgd.min.js"></script>
-<script type="text/javascript">
-    var $masonry_container = $('#masonry_container');
-    $masonry_container.imagesLoaded(function(){
-      $masonry_container.masonry({
-        itemSelector : '.masonry-grid',
-        columnWidth : 270
-      });
-    });
-</script>
-<script>
-    var tag = document.createElement('script');
 
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-    var player;
-    var players = [];
-    var videoIds = [];
-    for (var i = 0;i<10;i++) {
-        players.push(String(i));
-        videoIds.push($('#'+i).attr('vid'));
-    }
-
-    function onYouTubeIframeAPIReady() {
-        for (var i = 0; i < videoIds.length; i++) {
-            player = new YT.Player(players[i], {
-                height: '360',
-                width: '640',
-                videoId: videoIds[i],
-                events: {
-                    // 'onReady': onPlayerReady,
-                    // 'onStateChange': onPlayerStateChange
-                }
-            });
+    <style type="text/css">
+        .masonry-grid img {
+            max-width: 260px;
         }
-    }
+    </style>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.1/imagesloaded.pkgd.min.js"></script>
+    <script type="text/javascript">
+        var $masonry_container = $('#masonry_container');
+        $masonry_container.imagesLoaded(function () {
+            $masonry_container.masonry({
+                itemSelector: '.masonry-grid',
+                columnWidth: 270
+            });
+        });
+    </script>
+    <script>
+        var tag = document.createElement('script');
+
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        var player;
+        var players = [];
+        var videoIds = [];
+        for (var i = 0; i < 30; i++) {
+            players.push(String(i));
+            videoIds.push($('#' + players[i]).attr('vid'));
+        }
+
+        function onYouTubeIframeAPIReady() {
+            for (var i = 0; i < videoIds.length; i++) {
+                player = new YT.Player(players[i], {
+                    height: '360',
+                    width: '640',
+                    videoId: videoIds[i],
+                    events: {
+                        // 'onReady': onPlayerReady,
+                        // 'onStateChange': onPlayerStateChange
+                    }
+                });
+            }
+        }
 
     //   function onPlayerReady(event) {
     //   }
@@ -56,5 +62,5 @@
     //   }
     //   function stopVideo() {
     //   }
-</script>
-<% include ./includes/footer.ejs %>
+    </script>
+    <% include ./includes/footer.ejs %>
