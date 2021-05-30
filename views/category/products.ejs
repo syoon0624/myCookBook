@@ -1,29 +1,29 @@
 <% include ../includes/header.ejs %>
     <table class="table table-bordered table-hover">
         <tr>
-            <th width="100px" style="text-align: center;">카테고리명</th>
-            <th style="text-align: center;">개설 날짜</th>
-            <th>내용</th>
-            <th>사용자명</th>
-            <th>삭제</th>
+            <th width="80px" style="text-align: center;">카테고리명</th>
+            <th width="50px" style="text-align: center;">개설 날짜</th>
+            <th width="350px" style="text-align: center;">내용</th>
+            <th width="30px" style="text-align: center;">사용자명</th>
+            <th width="30px" style="text-align: center;">삭제</th>
         </tr>
         <%categories.forEach(function(product){%>
         <tr>
-            <td>
+            <td style="text-align: center;">
                 <a href="/categori/products/detail/<%=product.id%>"><%=product.title%></a>
             </td>
-            <td>
+            <td style="text-align: center;" >
                 <%=product.getDate.year%> -
                 <%=product.getDate.month%> -
                 <%=product.getDate.day%>
             </td>
-            <td>
-                <%=product.description%> -
+            <td style="text-align: center;">
+                <%=product.description%>
             </td>
-            <td>
-                <%=product.username%> -
+            <td style="text-align: center;">
+                <%=product.username%>
             </td>
-            <td>
+            <td style="text-align: center;">
                 <a href="/categori/products/delete/<%=product.id%>" class="btn btn-danger" onclick="return confirm('삭제하시겠습니까?')">삭제</a>
             </td>
         </tr>
