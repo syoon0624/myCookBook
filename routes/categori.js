@@ -177,8 +177,19 @@ router.post('/products/edit/:id', loginRequired, function (req, res) {
 });
 
 router.get('/products/delete/:id', function (req, res) {
-  CategoriModel.deleteMany({ _id: req.params.id }, function (err) {
-    res.redirect('/categori/products');
+  CategoriModel.findOne({ _id: req.params.id }, function (err, products) {
+    CategoriModel.deleteMany({ _id: req.params.id }, function (err) {
+      VideoModel.find(function (err, myVideo) {
+        for (var i in myVideo) {
+          if (products.title == myVideo[i].categori) {
+            var deleteItem = myVideo[i].categori;
+          }
+        }
+        VideoModel.deleteMany({ categori: deleteItem }, function (err) {
+          res.redirect('/categori/products');
+        });
+      });
+    });
   });
 });
 
