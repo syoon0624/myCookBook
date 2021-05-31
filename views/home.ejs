@@ -1,35 +1,36 @@
 <% include ./includes/header.ejs %>
     <div style="background-color:lavenderblush;">
-        <% var count = 0; %>
+        <h2 style="padding: 30px;">Categories</h2>
+        <% var count = 0; var collapseCount = 'less';%>
         <center>
+        <div class="accordion w-85" id="accordionExample" style="padding-bottom: 20px;">
         <% for (var i in video) { %>
-            <div style ="color:gray; font-weight:bold; font-size:2.0em; margin-left: 30px; padding-top: 30px">
-                <div style="width: 100%;
-                                            max-width: 7rem;
-                                            height: 0.25rem;
-                                            background-color: #2c3e50;
-                                            border-radius: 1rem;
-                                            border-color: #2c3e50 !important;"></div>
-                <%=video[i].category.title%>
-                <div style="width: 100%;
-                                            max-width: 7rem;
-                                            height: 0.25rem;
-                                            background-color: #2c3e50;
-                                            border-radius: 1rem;
-                                            border-color: #2c3e50 !important;"></div>
-            </div>
-            <% for (var j in video[i].videos) { %>
-                <div class="card" style="width: 55rem; margin-bottom: 15px; margin-top: 15px;">
-                    <div class="card-top" id="<%=count%>" vid="<%=video[i].videos[j].video_id%>" style="margin: 30px;">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title"><%=video[i].videos[j].title%></h5>
-                        <p class="card-text">해당 영상에 대한 메모를 여기에 출력.
-                        </p>
+            <div class="accordion-item" style="margin: 20px;">
+                <h2 class="accordion-header" id="<%=video[i].category.title%>">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#<%=collapseCount%>"
+                    aria-expanded="true" aria-controls="<%=collapseCount%>" style ="padding-top: 30px">
+                        <%=video[i].category.title%>
+                    </button>
+                </h2>
+                <div id="<%=collapseCount%>" data-bs-parent="#accordionExample" class="accordion-collapse collapse" aria-labelledby="<%=video[i].category.title%>">
+                    <div class="accordion-body">
+                        <% for (var j in video[i].videos) { %>
+                            <div class="card" style="width: 55rem; margin-bottom: 15px; margin-top: 15px;">
+                                <div class="card-top" id="<%=count%>" vid="<%=video[i].videos[j].video_id%>" style="margin: 30px;">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title"><%=video[i].videos[j].title%></h5>
+                                    <p class="card-text">해당 영상에 대한 메모를 여기에 출력.
+                                    </p>
+                                </div>
+                            </div>
+                        <%count++;}; %>
                     </div>
                 </div>
-            <%count++;}; %>
+            </div>
+            <%collapseCount = collapseCount+ "le";%>
         <%};%>
+        </div>
         </center>
     </div>
 
