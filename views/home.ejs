@@ -1,15 +1,35 @@
 <% include ./includes/header.ejs %>
-    <div style="background-color:lavenderblush">
+    <div style="background-color:lavenderblush;">
         <% var count = 0; %>
         <center>
         <% for (var i in video) { %>
-            <div style ="color:gray; font-weight:bold; font-size:2.0em;">
+            <div style ="color:gray; font-weight:bold; font-size:2.0em; margin-left: 30px; padding-top: 30px">
+                <div style="width: 100%;
+                                            max-width: 7rem;
+                                            height: 0.25rem;
+                                            background-color: #2c3e50;
+                                            border-radius: 1rem;
+                                            border-color: #2c3e50 !important;"></div>
                 <%=video[i].category.title%>
+                <div style="width: 100%;
+                                            max-width: 7rem;
+                                            height: 0.25rem;
+                                            background-color: #2c3e50;
+                                            border-radius: 1rem;
+                                            border-color: #2c3e50 !important;"></div>
             </div>
             <% for (var j in video[i].videos) { %>
-                <div id="<%=count%>" vid="<%=video[i].videos[j].video_id%>">
+                <div class="card" style="width: 55rem; margin-bottom: 15px; margin-top: 15px;">
+                    <div class="card-top" id="<%=count%>" vid="<%=video[i].videos[j].video_id%>" style="margin: 30px;">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"><%=video[i].videos[j].title%></h5>
+                        <p class="card-text">해당 영상에 대한 메모를 여기에 출력.
+                        </p>
+                    </div>
                 </div>
-            <%count++;};};%>
+            <%count++;}; %>
+        <%};%>
         </center>
     </div>
 
@@ -47,8 +67,8 @@
         function onYouTubeIframeAPIReady() {
             for (var i = 0; i < videoIds.length; i++) {
                 player = new YT.Player(players[i], {
-                    height: '360',
-                    width: '640',
+                    height: '450',
+                    width: '800',
                     videoId: videoIds[i],
                 });
             }

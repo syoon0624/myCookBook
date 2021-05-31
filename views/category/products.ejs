@@ -1,10 +1,10 @@
 <% include ../includes/header.ejs %>
     <table class="table table-bordered table-hover">
-        <tr>
+        <tr class="table-info">
             <th width="80px" style="text-align: center;">카테고리명</th>
             <th width="50px" style="text-align: center;">개설 날짜</th>
-            <th width="350px" style="text-align: center;">내용</th>
-            <th width="30px" style="text-align: center;">사용자명</th>
+            <th width="550px" style="text-align: center;">내용</th>
+            <th width="50px" style="text-align: center;">사용자명</th>
             <th width="30px" style="text-align: center;">삭제</th>
         </tr>
         <%categories.forEach(function(product){%>
@@ -17,7 +17,7 @@
                 <%=product.getDate.month%> -
                 <%=product.getDate.day%>
             </td>
-            <td style="text-align: center;">
+            <td>
                 <%=product.description%>
             </td>
             <td style="text-align: center;">
@@ -30,6 +30,6 @@
         <% }); %>
     </table>
  
-    <a href="categories/write" class="btn btn-default">작성하기</a>
+    <a href="categories/write" class="btn btn-primary">작성하기</a>
  
 <% include ../includes/footer.ejs %>
