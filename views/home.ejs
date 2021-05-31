@@ -1,16 +1,15 @@
 <% include ./includes/header.ejs %>
-    <div style="background-color:lavenderblush">
+    <div style="background-color:#e3f2fd;">
         <% var count = 0; %>
-        <center>
         <% for (var i in video) { %>
-            <div style ="color:gray; font-weight:bold; font-size:2.0em;">
+            <div style ="color:gray; font-weight:bold; font-size:2.0em; margin-left: 30px; padding-top: 30px">
                 <%=video[i].category.title%>
             </div>
             <% for (var j in video[i].videos) { %>
-                <div id="<%=count%>" vid="<%=video[i].videos[j].video_id%>">
+                <div id="<%=count%>" vid="<%=video[i].videos[j].video_id%>" style="margin: 30px;">
                 </div>
-            <%count++;};};%>
-        </center>
+            <%count++;}; %>
+        <%};%>
     </div>
 
     <style type="text/css">
