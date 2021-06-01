@@ -26,6 +26,7 @@ router.get('/products', function (req, res) {
 });
 
 router.get('/categories/write', loginRequired, function (req, res) {
+  console.log('??');
   res.render('category/form', { categories: '' });
 });
 
@@ -35,7 +36,7 @@ router.post('/categories/write', loginRequired, function (req, res) {
     description: req.body.description,
     username: req.user.username,
   });
-  //이 아래는 수정되지 않았음
+  //
   var validationError = category.validateSync();
   if (validationError) {
     res.send(validationError);
@@ -44,11 +45,11 @@ router.post('/categories/write', loginRequired, function (req, res) {
       res.redirect('/categori/products');
     });
   }
-  //이 위는 수정되지 않았음
+  //
 });
 
 router.get('/products/detail/:id', function (req, res) {
-  //url 에서 변수 값을 받아올떈 req.params.id 로 받아온다
+  //url 에서 변수 값을 받아올때 req.params.id 로 받아온다
   var word = req.query.keyword;
   CategoriModel.findOne({ _id: req.params.id }, function (err, product) {
     var video = [];
@@ -59,7 +60,11 @@ router.get('/products/detail/:id', function (req, res) {
         var videos = []; // 비디오 목록을 담는 임시 배열
         for (var j in myVideo) {
           if (product.title == myVideo[j].categori) {
-            videos.push(myVideo[j].title);
+            var k = {
+              title: myVideo[j].title,
+              id: myVideo[j]._id,
+            };
+            videos.push(k);
           }
         }
         if (videos.length != 0) {
@@ -112,7 +117,7 @@ router.get('/products/detail/:id', function (req, res) {
             });
           });
         } else {
-          //console.log(item[0]);
+          console.log(mitem);
           res.render('category/productsDetail', {
             product: product,
             comments: comments,
@@ -145,7 +150,7 @@ router.post('/products/detail/:id', loginRequired, function (req, res) {
     }
     count++;
   }
-  res.redirect('/categori/products');
+  res.redirect('/categori/products/detail/' + req.params.id);
 });
 
 router.get('/products/edit/:id', loginRequired, function (req, res) {
@@ -189,6 +194,14 @@ router.get('/products/delete/:id', function (req, res) {
           res.redirect('/categori/products');
         });
       });
+    });
+  });
+});
+
+router.get('/products/detail/delete/:id', function (req, res) {
+  VideoModel.findOne({ _id: req.params.id }, function (err, products) {
+    VideoModel.deleteMany({ _id: products }, function (err) {
+      res.redirect('/categori/products/');
     });
   });
 });
