@@ -5,8 +5,8 @@
 ### 경희대학교 컴퓨터공학과 
 #### 2017103997 송근영, 2016104146 이승윤
 
-[MyCookbook 주소](http://khuhub.khu.ac.kr/2016104146/OpenSource-MyCookBook/)<br>
-위 주소는 배포시 업데이트할 예정 
+[MyCookbook 주소](https://2016104146.oss-2021.tk:23023/)<br>
+!해당 웹사이트는 아직 미완성 상태입니다.!
 
 ## 설명
 이 프로젝트는 youtube api를 사용하여 요리를 목적으로 하는 유튜브의 정보 및 동영상을 나만의 리스트로 볼 수 있도록 하기위해 제작되었습니다.
@@ -33,20 +33,22 @@
 - login: 로그인
 
 ## 실행 방법
-# 1. 설치
+### 1. 설치
 - `git clone http://khuhub.khu.ac.kr/2016104146/OpenSource-MyCookBook.git` 혹은 해당 레포지토리 다운로드
 - nodejs
 - mongoDB
-- 설치된 폴더로 접속 후 해당 CLI 입력
+
+### 2. 로컬환경에서 실행
+- clone된 폴더로 접속 후 해당 CLI 입력
 `npm install`
 - `npm start`를 입력시 로컬서버의 3000번 port로 기동
 
 ## OpenSource API & 레퍼런스
-[Youtube API](https://developers.google.com/youtube/v3/getting-started?hl=ko)
-[Facebook Developer](https://developers.facebook.com/)  
-[Mongoose](https://mongoosejs.com/)
-[BootStrap](https://getbootstrap.com/)
-[AWS](https://aws.amazon.com/ko/sdk-for-node-js/)
+[Youtube API](https://developers.google.com/youtube/v3/getting-started?hl=ko) <br>
+[Facebook Developer](https://developers.facebook.com/)  <br>
+[Mongoose](https://mongoosejs.com/) <br>
+[BootStrap](https://getbootstrap.com/) <br>
+[AWS](https://aws.amazon.com/ko/sdk-for-node-js/) <br>
 
 ## Information
 송근영 : rmsdud1626@naver.com<br>
