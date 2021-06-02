@@ -6,7 +6,7 @@ var Youtube = require('youtube-node');
 var youtube = new Youtube();
 
 var loginRequired = require('../libs/loginRequired');
-
+var redirectUrls = '';
 var limit = 10; // 출력 갯수
 youtube.setKey('AIzaSyCAaeW1qMSInEdN1OzU20FZlToIZYkb1bc'); // API 키 입력
 
@@ -26,7 +26,6 @@ router.get('/products', function (req, res) {
 });
 
 router.get('/categories/write', loginRequired, function (req, res) {
-  console.log('??');
   res.render('category/form', { categories: '' });
 });
 
@@ -51,6 +50,7 @@ router.post('/categories/write', loginRequired, function (req, res) {
 router.get('/products/detail/:id', function (req, res) {
   //url 에서 변수 값을 받아올때 req.params.id 로 받아온다
   var word = req.query.keyword;
+  redirectUrls = req.params.id;
   CategoriModel.findOne({ _id: req.params.id }, function (err, product) {
     var video = [];
     //제품정보를 받고 그안에서 댓글을 받아온다.
@@ -117,7 +117,7 @@ router.get('/products/detail/:id', function (req, res) {
             });
           });
         } else {
-          console.log(mitem);
+          //console.log(mitem);
           res.render('category/productsDetail', {
             product: product,
             comments: comments,
@@ -201,7 +201,7 @@ router.get('/products/delete/:id', function (req, res) {
 router.get('/products/detail/delete/:id', function (req, res) {
   VideoModel.findOne({ _id: req.params.id }, function (err, products) {
     VideoModel.deleteMany({ _id: products }, function (err) {
-      res.redirect('/categori/products/');
+      res.redirect('/categori/products/detail/'+ redirectUrls);
     });
   });
 });
