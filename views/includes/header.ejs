@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MYCOOK</title>
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--bootstrap js 추가 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container-fluid" style="margin-top: 15px;">
+        <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+            <div> 
+                <div class="navbar-brand" style="float: left;"> 
+                    <a href="/" class="nav-link">MyCookBook</a>
+                </div>
+                <div class="navbar">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Home</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="/categori/products">Category</a></li>
+                        <% if(isLogin){%>
+                            <li class="nav-item"><a class="nav-link" href="/accounts/logout" onclick="return confirm('로그아웃 하시겠습니까?')">LOGOUT</a></li>
+                        <%}else{%>
+                            <li class="nav-item"><a class="nav-link" href="/accounts/join">SignUp</a></li> 
+                            <li class="nav-item"><a class="nav-link" href="/accounts/login">LOGIN</a></li>  
+                        <%}%>
+                    </ul> 
+                </div> 
+            </div>
+        </nav>
+            <hr style=" border: 2px solid #4263eb" />
+

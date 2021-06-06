@@ -1,0 +1,135 @@
+<% include ../includes/header.ejs %>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            　<h2 style="padding-left: 30px;"><%=product.title%></h2>
+        <div style="padding-bottom: 10px;">　　
+            작성일 :
+            <%=product.getDate.year%> -
+                <%=product.getDate.month%> -
+                    <%=product.getDate.day%>
+        </div>
+        <div style="padding-left: 30px">
+            설명 : <%=product.description%>
+        </div>
+            <hr/>
+        </div>
+        
+        <div>
+            <% var count=0; %>
+            <% if (items.length != 0) { %>
+            <ul class="list-group" style="padding-left: 30px; padding-bottom: 30px;">
+                <li class="list-group-item list-group-item-info" aria-current="true">보유중인 영상</li>
+                <% for (var i in items[0]) { %>
+                <li class="list-group-item"><%=items[0][i].title%> <a href="/categori/products/detail/delete/<%=items[0][i].id%>" style="position: absolute; right: 1%;" class="btn btn-danger btn-sm" onclick="return confirm('삭제하시겠습니까?')">삭제</a></li>
+                <%count++;};%>
+            </ul>
+            <%};%>
+        </div>
+        <button style="margin-left: 30px; margin-bottom: 10px;" class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+            aria-expanded="false" aria-controls="collapseExample">
+            영상 추가하기
+        </button>
+        <div class="collapse show" id="collapseExample" style="padding-left: 30px;">
+            <div class="card card-body">
+            <form method="get" action="">
+                <div class="input-group" style="padding-left: 10px;">
+                    <input type="text" class="form-control" placeholder="검색 키워드를 입력하세요!" name="keyword" autocomplete='off'>
+                    <span class="input-group-btn">
+                        <button class="btn btn-secondary" type="submit">찾기</button>
+                    </span>
+                </div>
+            </form>
+            <form method="post" action="">
+                <% for (var i in videos) { %>
+                    <div style="float:left;
+                                         padding: 15px;
+                                        ">
+                        <input type="checkbox" name="videoNum" style="
+                                    position: absolute;
+                                    margin-top: 5px;
+                                    margin-left: 5px;
+                                    z-index: 4;
+                                    zoom:3.0;
+                                    "
+                            value="<%=videos[i].id + '///' + videos[i].title +'///'+ videos[i].categori +'///'+ videos[i].video_id +'///'+ videos[i].urls%>" />
+                        <div id="<%=videos[i].id%>" vid="<%=videos[i].video_id%>">
+                        </div>
+                    </div>
+                    <%};%>
+                        <button class="btn btn-primary" style="margin-top: 10px; margin-left: 10px;">영상담기</button>
+            </form>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div>   
+            <hr />
+            </div>
+        </div>
+    </div>
+    
+    <div style="padding-bottom: 30px;">
+        <a href="/categori/products" class="btn btn-dark">목록으로</a>
+        <a href="/categori/products/edit/<%=product._id%>" class="btn btn-primary">수정</a>
+    </div>
+<% include ../includes/footer.ejs %>
+
+<script>
+(function(){
+    // 영상 메모 구현 파트(아직 미구현)
+    $(document).ready(function() {
+        $('#commentForm').submit(function(){
+            var $contentVal = $(this).children('textarea[name=content]').val();
+            if($contentVal){
+                $.ajax({
+                    url: '/admin/products/ajax_comment/insert',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                })
+                .done(function(args) {
+                    if(args.message==="success"){
+                        $('#comment_area').append(
+                            '<div>' + args.content +
+                            " ( <a class='comment_delete' comment_id='"+ args._id +"'>삭제</a> ) </div>"
+                        );
+                        $('#commentForm textarea[name=content]').val("");
+                    }
+                })
+                .fail(function(args) {
+                    console.log(args);
+                });
+            }else{
+                alert('댓글 내용을 입력해주세요.')
+            }
+            return false;
+        });
+    });
+})();
+</script>
+
+<script>
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    var players = [];
+    var videoIds = [];
+    for (var i = 0; i < 10; i++) {
+        players.push(String(i));
+        videoIds.push($('#' + i).attr('vid'));
+    }
+
+    function onYouTubeIframeAPIReady() {
+        for (var i = 0; i < videoIds.length; i++) {
+            player = new YT.Player(players[i], {
+                height: '360',
+                width: '640',
+                videoId: videoIds[i],
+                events: {
+                }
+            });
+        }
+    }
+</script>
