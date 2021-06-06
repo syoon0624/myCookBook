@@ -107,26 +107,6 @@
 </script>
 
 <script>
-$(document).on('click' , '.comment_delete' , function(){
-    if(confirm('삭제하시겠습니까?')){ //확인창 예 눌렀을 시만 진행
-        var $self = $(this);
-        $.ajax({
-            url: '/admin/products/ajax_comment/delete',
-            type: 'POST',
-            data: { comment_id : $self.attr('comment_id') },
-        })
-        .done(function() {
-            $self.parent().remove();
-            alert("삭제가 완료되었습니다.");
-        })
-        .fail(function(args) {
-            console.log(args);
-        });
-    }
-});
-</script>
-
-<script>
     var tag = document.createElement('script');
 
     tag.src = "https://www.youtube.com/iframe_api";

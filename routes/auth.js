@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var UserModel = require('../models/UserModel');
 var passport = require('passport');
-var FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 passport.serializeUser(function (user, done) {
@@ -49,10 +48,9 @@ passport.use(
   )
 );
 
-// http://localhost:3000/auth/facebook 접근시 facebook으로 넘길 url 작성해줌
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 
-//인증후 페이스북에서 이 주소로 리턴해줌. 상단에 적은 callbackURL과 일치
+//인증후 구글에서 이 주소로 리턴해줌. 상단에 적은 callbackURL과 일치
 router.get(
   '/google/callback',
   passport.authenticate('google', {

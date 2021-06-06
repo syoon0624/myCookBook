@@ -4,16 +4,19 @@ var port = 3000;
 
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
+
 //auto-increment를 위한 패키지
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var flash = require('connect-flash');
+
 //passport 로그인 관련
 var passport = require('passport');
 var session = require('express-session');
 
+//mongodb 연동
 var db = mongoose.connection;
 db.on('error', console.error);
 db.once('open', function () {
@@ -39,6 +42,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/uploads', express.static('uploads'));
 
+// MiddleWare 지정
 var sessionMiddleWare = session({
   secret: 'fastcampus',
   resave: false,
@@ -67,7 +71,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-//routes add
+//routes
 app.use('/', Video);
 app.use('/categori', categori);
 app.use('/accounts', accounts);
