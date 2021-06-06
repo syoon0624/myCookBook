@@ -16,6 +16,7 @@ router.get('/', function (req, res) {
 
 router.get('/products', function (req, res) {
   CategoriModel.find(function (err, products) {
+    console.log(products);
     res.render(
       'category/products',
       { categories: products }
@@ -33,7 +34,7 @@ router.post('/categories/write', loginRequired, function (req, res) {
   var category = new CategoriModel({
     title: req.body.title,
     description: req.body.description,
-    username: req.user.username,
+    username: req.user.displayname,
   });
   //
   var validationError = category.validateSync();
@@ -133,14 +134,19 @@ router.get('/products/detail/:id', function (req, res) {
 router.post('/products/detail/:id', loginRequired, function (req, res) {
   var item = [];
   var count = 1;
-  for (var i in req.body.videoNum) {
-    item.push(req.body.videoNum[i].split('///'));
+  var temp = '';
+  console.log(req.body.videoNum.length);
+  if (req.body.videoNum.length > 30) {
+    for (var i in req.body.videoNum) {
+      temp += req.body.videoNum[i];
+    }
+    item.push(temp.split('///'));
     var video = new VideoModel({
-      categori: item[i][2],
+      categori: item[0][2],
       id: count,
-      title: item[i][1],
-      video_id: item[i][3],
-      urls: item[i][4],
+      title: item[0][1],
+      video_id: item[0][3],
+      urls: item[0][4],
     });
     var validationError = video.validateSync();
     if (validationError) {
@@ -149,6 +155,24 @@ router.post('/products/detail/:id', loginRequired, function (req, res) {
       video.save(function (err) {});
     }
     count++;
+  } else {
+    for (var i in req.body.videoNum) {
+      item.push(req.body.videoNum[i].split('///'));
+      var video = new VideoModel({
+        categori: item[i][2],
+        id: count,
+        title: item[i][1],
+        video_id: item[i][3],
+        urls: item[i][4],
+      });
+      var validationError = video.validateSync();
+      if (validationError) {
+        res.send(validationError);
+      } else {
+        video.save(function (err) {});
+      }
+      count++;
+    }
   }
   res.redirect('/categori/products/detail/' + req.params.id);
 });
@@ -201,7 +225,7 @@ router.get('/products/delete/:id', function (req, res) {
 router.get('/products/detail/delete/:id', function (req, res) {
   VideoModel.findOne({ _id: req.params.id }, function (err, products) {
     VideoModel.deleteMany({ _id: products }, function (err) {
-      res.redirect('/categori/products/detail/'+ redirectUrls);
+      res.redirect('/categori/products/detail/' + redirectUrls);
     });
   });
 });
