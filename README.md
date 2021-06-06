@@ -6,7 +6,6 @@
 #### 2017103997 송근영, 2016104146 이승윤
 
 [MyCookbook 주소](https://2016104146.oss-2021.tk:23023/)<br>
-!해당 웹사이트는 아직 미완성 상태입니다.!
 
 ## 설명
 이 프로젝트는 youtube api를 사용하여 요리를 목적으로 하는 유튜브의 정보 및 동영상을 나만의 리스트로 볼 수 있도록 하기위해 제작되었습니다.
@@ -45,11 +44,11 @@
 
 ## OpenSource API & 레퍼런스
 [Youtube API](https://developers.google.com/youtube/v3/getting-started?hl=ko) <br>
-[Facebook Developer](https://developers.facebook.com/)  <br>
+[Google Developer](https://developers.google.com/people)  <br>
 [Mongoose](https://mongoosejs.com/) <br>
 [BootStrap](https://getbootstrap.com/) <br>
 [AWS](https://aws.amazon.com/ko/sdk-for-node-js/) <br>
 
-## Information
+## Information & Contact
 송근영 : rmsdud1626@naver.com<br>
 이승윤 : syoon624@naver.com
