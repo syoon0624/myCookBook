@@ -49,6 +49,9 @@
 [BootStrap](https://getbootstrap.com/) <br>
 [AWS](https://aws.amazon.com/ko/sdk-for-node-js/) <br>
 
+## License
+[MIT License](http://khuhub.khu.ac.kr/2016104146/OpenSource-MyCookBook/blob/master/LICENSE)<br>
+
 ## Information & Contact
 송근영 : rmsdud1626@naver.com<br>
 이승윤 : syoon624@naver.com
