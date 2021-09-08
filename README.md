@@ -4,8 +4,6 @@
 
 <img width="1440" alt="스크린샷 2021-06-24 오후 6 38 17" src="https://user-images.githubusercontent.com/77139957/123241137-db005f00-d51b-11eb-8b7f-57c797108141.png">
 
-### 경희대학교 컴퓨터공학과 
-#### 2017103997 송근영, 2016104146 이승윤
 
 [MyCookbook 주소](https://2016104146.oss-2021.tk:23023/)<br>
 
